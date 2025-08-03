@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/categories.dart';
+import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
 
@@ -19,7 +20,6 @@ class _TabsScreenState extends State<TabsScreen> {
     final isExisting = _favoriteMeals.contains(meal);
 
     void _showInfoMessage(String message) {
-
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -48,12 +48,16 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  _setScreen(String identifier){
-    if(identifier == 'filters') {
-      Navigator.of(context).pushNamed('/filters');
-    } else {
-       Navigator.of(context).pop();
-    }
+  void _setScreen(String identifier) {
+    Navigator.of(context).pop();
+    if (identifier == 'filters') {
+      // Close the drawer before navigating
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const FiltersScreen(),
+        ),
+      );
+    } 
   }
 
   @override
@@ -73,7 +77,9 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer:  MainDrawer(onSelectScreen: _setScreen,),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
