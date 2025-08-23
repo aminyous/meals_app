@@ -40,11 +40,10 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
       //     }
       //   },
       // ),
-      body: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (bool didPop, dynamic result) {
-          if (didPop) return;
-          return ref.read(filtersProvider.notifier).setFilters({
+      body: WillPopScope(
+        //canPop: false,
+        onWillPop: () async {
+          ref.read(filtersProvider.notifier).setFilters({
             Filter.glutenFree: _glutenFreeFilterSet,
             Filter.lactoseFree: _lactoseFreeFilterSet,
             Filter.vegetarian: _vegetarianFilterSet,
@@ -56,7 +55,7 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
           //   Filter.vegetarian: _vegetarianFilterSet,
           //   Filter.vegan: _veganFilterSet,
           // });
-          
+          return true;
         },
         child: Column(
           children: [
