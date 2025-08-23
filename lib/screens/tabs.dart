@@ -77,7 +77,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+ 
     final meals = ref.watch(mealsProvider);
 
     final availableMeals = meals.where((meal) {
